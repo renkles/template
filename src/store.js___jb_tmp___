@@ -1,0 +1,48 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    screenHeight: document.body.clientHeight,
+    screenWidth: document.body.clientWidth,
+    pageNum: 1,
+    isScrolling: false,
+    scrollTime: 800
+  },
+  mutations: {
+    init (state) {
+      state.screenHeight = document.body.clientHeight
+      state.screenWidth = document.body.clientWidth
+    },
+    scrollTop (state) {
+      if (state.pageNum > 1) {
+        state.pageNum = state.pageNum - 1
+        state.isScrolling = true
+        setTimeout(function () {
+          state.isScrolling = false
+        }, state.scrollTime)
+      }
+    },
+    scrollBottom (state) {
+      if (state.pageNum < 5) {
+        state.pageNum = state.pageNum + 1
+        state.isScrolling = true
+        setTimeout(function () {
+          state.isScrolling = false
+        }, state.scrollTime)
+      }
+    },
+    changePages (state, msg) {
+      state.pageNum = msg
+      state.isScrolling = true
+      setTimeout(function () {
+        state.isScrolling = false
+      }, state.scrollTime)
+    }
+  },
+  actions: {
+
+  }
+})
